@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/webp" href="/logo.webp" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoshaLink Admin — Command & Inquiries Portal</title>
+
+  <!-- Google Fonts matching Frontend -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Condiment&family=Geist:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CDN matching Frontend design tokens -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            headline: ['Montserrat', 'Vazirmatn', 'sans-serif'],
+            body: ['Inter', 'Vazirmatn', 'sans-serif'],
+            mono: ['Geist', 'monospace']
+          },
+          colors: {
+            cream: '#EFF4FF',
+            neon: '#38bdf8',
+            surface: "#ffffff",
+            "surface-dim": "#f1f5f9",
+            "surface-bright": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f8fafc",
+            "surface-container": "#f1f5f9",
+            "surface-container-high": "#e2e8f0",
+            "surface-container-highest": "#cbd5e1",
+            "on-surface": "#0f172a",
+            "on-surface-variant": "#475569",
+            primary: "#0284c7",
+            secondary: "#38bdf8",
+            tertiary: "#6366f1",
+            background: "#f8fafc",
+            "on-background": "#0f172a",
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-[#f8fafc] dark:bg-[#0b1120] text-[#0f172a] dark:text-[#f1f5f9] font-body antialiased selection:bg-sky-500 selection:text-white transition-colors duration-300">
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>
