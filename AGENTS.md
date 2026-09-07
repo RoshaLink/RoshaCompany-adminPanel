@@ -100,3 +100,11 @@ OurOwnWebsiteAdmin/
 - Created glassmorphic `LoginPage.jsx` with password visibility toggle, error handling, brute-force awareness, and quick-login chips for team members (`Bella`, `Milad`, `Morteza`, `Sohrab`, `Mina`).
 - Updated `AdminNavbar` and `AdminSidebar` with active user indicator and Logout functionality.
 - Protected all admin routes and verified zero-error production build.
+
+### Task #3: Multi-Language i18n System, Full Responsiveness & Mobile UX (2026-09-07)
+- Integrated `i18next` and `react-i18next` with comprehensive translation dictionaries for Persian (`fa`), Swedish (`sv`), and English (`en`).
+- Implemented bidirectional layout switching with dynamic `dir="rtl"` and `Vazirmatn` font hierarchy when Persian is active.
+- Created glassmorphic `LanguageSwitch.jsx` dropdown and placed it in `AdminNavbar` and `LoginPage`.
+- Implemented adaptive **Mobile Card Views** for `LeadsTable.jsx` and `NewsletterManagementPage.jsx` on viewports `< md`, eliminating horizontal scrolling frustration on smartphones.
+- Enhanced responsive drawer navigation with mobile search toggle, touch-optimized button targets ($\ge 44\text{px}$), and responsive modals.
+- Verified production build with 0 warnings/errors.

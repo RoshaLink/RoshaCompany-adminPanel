@@ -1,8 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Inbox,
   Sparkles,
-  PhoneCall,
   CheckCircle2,
   Clock,
   TrendingUp,
@@ -12,6 +12,7 @@ import { useAdmin } from '../../context/AdminContext';
 import { GlassCard } from '../ui/GlassCard';
 
 export const StatsOverview = () => {
+  const { t } = useTranslation();
   const {
     stats,
     subscribersStats,
@@ -33,9 +34,9 @@ export const StatsOverview = () => {
 
   const cards = [
     {
-      title: 'Total Inquiries',
+      title: t('dashboard.cardTotalTitle'),
       value: isStatsLoading ? '...' : total,
-      subtext: 'All time submissions',
+      subtext: t('dashboard.cardTotalSubtext'),
       icon: Inbox,
       gradient: 'from-sky-500 to-blue-600',
       action: () => {
@@ -44,9 +45,9 @@ export const StatsOverview = () => {
       },
     },
     {
-      title: 'New Leads',
+      title: t('dashboard.cardNewTitle'),
       value: isStatsLoading ? '...' : newLeads,
-      subtext: 'Awaiting first contact',
+      subtext: t('dashboard.cardNewSubtext'),
       icon: Sparkles,
       gradient: 'from-sky-400 to-cyan-500',
       highlight: newLeads > 0,
@@ -56,9 +57,9 @@ export const StatsOverview = () => {
       },
     },
     {
-      title: 'In Discussion',
+      title: t('dashboard.cardDiscussionTitle'),
       value: isStatsLoading ? '...' : inProgress + contacted,
-      subtext: `${inProgress} in-progress, ${contacted} contacted`,
+      subtext: `${inProgress + contacted} ${t('dashboard.cardDiscussionSubtext')}`,
       icon: Clock,
       gradient: 'from-amber-400 to-orange-500',
       action: () => {
@@ -67,9 +68,9 @@ export const StatsOverview = () => {
       },
     },
     {
-      title: 'Converted',
+      title: t('dashboard.cardConvertedTitle'),
       value: isStatsLoading ? '...' : closed,
-      subtext: `${conversionRate}% conversion rate`,
+      subtext: `${conversionRate}% ${t('dashboard.cardConvertedSubtext')}`,
       icon: CheckCircle2,
       gradient: 'from-emerald-400 to-teal-500',
       action: () => {
@@ -78,9 +79,9 @@ export const StatsOverview = () => {
       },
     },
     {
-      title: 'Subscribers',
+      title: t('dashboard.cardSubsTitle'),
       value: isSubscribersLoading ? '...' : activeSubs,
-      subtext: `${subscribersStats?.total || 0} total registered`,
+      subtext: `${subscribersStats?.total || 0} ${t('dashboard.cardSubsSubtext')}`,
       icon: Mail,
       gradient: 'from-purple-500 to-indigo-600',
       highlight: activeSubs > 0,
@@ -91,22 +92,22 @@ export const StatsOverview = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4 mb-6 sm:mb-8">
       {cards.map((card, idx) => {
         const Icon = card.icon;
         return (
           <GlassCard
             key={idx}
             onClick={card.action}
-            className="group relative cursor-pointer"
+            className="group relative cursor-pointer hover:border-sky-400 transition-all p-4 sm:p-5"
           >
             {/* Top Row: Title and Icon */}
-            <div className="flex items-center justify-between gap-2 mb-4">
-              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4">
+              <span className="text-[11px] sm:text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider truncate">
                 {card.title}
               </span>
               <div
-                className={`w-9 h-9 rounded-xl bg-gradient-to-tr ${card.gradient} flex items-center justify-center text-white shadow-md shadow-sky-500/20 group-hover:scale-110 transition-transform`}
+                className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr ${card.gradient} flex items-center justify-center text-white shadow-md shadow-sky-500/20 group-hover:scale-110 transition-transform shrink-0`}
               >
                 <Icon className="w-4 h-4" />
               </div>
@@ -114,20 +115,20 @@ export const StatsOverview = () => {
 
             {/* Value */}
             <div className="flex items-baseline gap-2 mb-1">
-              <span className="text-3xl font-headline font-bold text-slate-900 dark:text-white">
-                {isStatsLoading ? '...' : card.value}
+              <span className="text-2xl sm:text-3xl font-headline font-bold text-slate-900 dark:text-white">
+                {card.value}
               </span>
               {card.highlight && (
                 <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-sky-100 dark:bg-sky-950 text-sky-600 dark:text-sky-400">
-                  Active
+                  {t('common.active')}
                 </span>
               )}
             </div>
 
             {/* Subtext */}
-            <div className="text-xs text-slate-400 flex items-center justify-between">
-              <span>{card.subtext}</span>
-              <TrendingUp className="w-3.5 h-3.5 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="text-[11px] sm:text-xs text-slate-400 flex items-center justify-between">
+              <span className="truncate">{card.subtext}</span>
+              <TrendingUp className="w-3.5 h-3.5 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0 rtl:rotate-180" />
             </div>
           </GlassCard>
         );

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { api } from '../config/api';
 import { useAuth } from './AuthContext';
+import i18n from '../i18n';
 
 const AdminContext = createContext();
 
@@ -140,11 +141,11 @@ export const AdminProvider = ({ children }) => {
         if (selectedLead && selectedLead.id === id) {
           setSelectedLead((prev) => ({ ...prev, status: newStatus }));
         }
-        showToast(`Inquiry status updated to "${newStatus}"`, 'success');
+        showToast(i18n.t('toast.statusUpdated', { status: newStatus }), 'success');
         fetchStats();
       }
     } catch (err) {
-      showToast(err.message || 'Failed to update status', 'error');
+      showToast(err.message || i18n.t('toast.errorOccurred'), 'error');
     }
   };
 
@@ -159,14 +160,14 @@ export const AdminProvider = ({ children }) => {
         if (selectedLead && selectedLead.id === id) {
           setSelectedLead(saved);
         }
-        showToast('Lead details updated and saved to DB', 'success');
+        showToast(i18n.t('toast.leadUpdated'), 'success');
         fetchStats();
         return { success: true, data: saved };
       } else {
         throw new Error(res.message || 'Failed to update lead');
       }
     } catch (err) {
-      showToast(err.message || 'Failed to update lead', 'error');
+      showToast(err.message || i18n.t('toast.errorOccurred'), 'error');
       return { success: false, error: err.message };
     }
   };
@@ -179,11 +180,11 @@ export const AdminProvider = ({ children }) => {
         if (selectedLead && selectedLead.id === id) {
           setSelectedLead(null);
         }
-        showToast('Inquiry removed from database', 'info');
+        showToast(i18n.t('toast.leadDeleted'), 'info');
         fetchStats();
       }
     } catch (err) {
-      showToast(err.message || 'Failed to delete inquiry', 'error');
+      showToast(err.message || i18n.t('toast.errorOccurred'), 'error');
     }
   };
 

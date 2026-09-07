@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useTranslation } from 'react-i18next';
 import {
   X,
   Lock,
@@ -14,7 +15,8 @@ import { useAuth } from '../../context/AuthContext';
 import { useAdmin } from '../../context/AdminContext';
 
 export const ChangePasswordModal = ({ isOpen, onClose }) => {
-  const { changePassword, user } = useAuth();
+  const { t } = useTranslation();
+  const { changePassword } = useAuth();
   const { showToast } = useAdmin();
 
   const [currentPassword, setCurrentPassword] = useState('');
@@ -42,22 +44,22 @@ export const ChangePasswordModal = ({ isOpen, onClose }) => {
     setSuccessMessage('');
 
     if (!currentPassword) {
-      setErrorMessage('Please enter your current password.');
+      setErrorMessage(t('auth.errRequired'));
       return;
     }
 
     if (!isMinLength) {
-      setErrorMessage('New password must be at least 8 characters long.');
+      setErrorMessage(t('changePassword.reqLength'));
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      setErrorMessage('New password and confirmation do not match.');
+      setErrorMessage(t('changePassword.reqMatch'));
       return;
     }
 
     if (currentPassword === newPassword) {
-      setErrorMessage('New password cannot be the same as your current password.');
+      setErrorMessage(t('changePassword.reqDifferent'));
       return;
     }
 
@@ -66,16 +68,16 @@ export const ChangePasswordModal = ({ isOpen, onClose }) => {
       const res = await changePassword(currentPassword, newPassword);
 
       if (res.success) {
-        setSuccessMessage('Password changed successfully! You can now use your new password.');
-        showToast('Password updated securely', 'success');
+        setSuccessMessage(t('changePassword.successAlert'));
+        showToast(t('toast.passwordChanged'), 'success');
         setTimeout(() => {
           handleClose();
         }, 1800);
       } else {
-        setErrorMessage(res.error || 'Failed to change password. Please check your current password.');
+        setErrorMessage(res.error || t('toast.errorOccurred'));
       }
     } catch (err) {
-      setErrorMessage(err.message || 'An unexpected error occurred.');
+      setErrorMessage(err.message || t('toast.errorOccurred'));
     } finally {
       setIsSubmitting(false);
     }
@@ -92,74 +94,73 @@ export const ChangePasswordModal = ({ isOpen, onClose }) => {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm animate-fadeIn"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-slate-950/60 backdrop-blur-sm animate-fadeIn"
       onClick={handleClose}
     >
       <div
-        className="w-full max-w-md rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-scaleUp my-auto"
+        className="w-full max-w-md rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[92vh] animate-scaleUp my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-gradient-to-r from-sky-500/10 to-transparent">
+        <div className="p-4 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex items-start justify-between gap-3 bg-gradient-to-b from-slate-50/50 dark:from-slate-800/20 to-transparent">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-500">
+            <div className="w-10 h-10 rounded-2xl bg-sky-50 dark:bg-sky-950 text-sky-500 border border-sky-200 dark:border-sky-800 flex items-center justify-center shrink-0">
               <KeyRound className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-lg font-headline font-bold text-slate-900 dark:text-white">
-                Change Password
+              <h3 className="text-base sm:text-lg font-headline font-bold text-slate-900 dark:text-white">
+                {t('changePassword.modalTitle')}
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                Update credentials for <span className="font-semibold text-sky-500 capitalize">{user?.displayName || user?.username}</span>
+              <p className="text-[11px] sm:text-xs text-slate-500">
+                {t('changePassword.modalSubtitle')}
               </p>
             </div>
           </div>
 
           <button
             onClick={handleClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Content */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          {/* Error Alert */}
+        {/* Content Body */}
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1 text-sm">
+          {/* Status Banners */}
           {errorMessage && (
-            <div className="p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/70 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2.5">
+            <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/70 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
               <span>{errorMessage}</span>
             </div>
           )}
 
-          {/* Success Alert */}
           {successMessage && (
-            <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-xs flex items-center gap-2.5">
+            <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-xs flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-500" />
               <span>{successMessage}</span>
             </div>
           )}
 
           {/* Current Password */}
-          <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider">
-              Current Password
+          <div className="space-y-1">
+            <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300">
+              {t('changePassword.currentPassword')}
             </label>
             <div className="relative">
-              <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+              <Lock className="w-4 h-4 absolute left-3 rtl:left-auto rtl:right-3 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
                 type={showCurrentPassword ? 'text' : 'password'}
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                placeholder="Enter current password"
+                placeholder={t('changePassword.currentPlaceholder')}
                 required
-                className="w-full pl-10 pr-11 py-2.5 rounded-xl bg-white/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700/80 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm text-slate-900 dark:text-white placeholder-slate-400 transition-all shadow-sm"
+                className="w-full pl-9 rtl:pl-10 rtl:pr-9 pr-10 py-2 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-500 text-slate-900 dark:text-white"
               />
               <button
                 type="button"
                 onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                className="p-1.5 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+                className="p-1.5 absolute right-2.5 rtl:right-auto rtl:left-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
               >
                 {showCurrentPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
@@ -167,99 +168,90 @@ export const ChangePasswordModal = ({ isOpen, onClose }) => {
           </div>
 
           {/* New Password */}
-          <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider">
-              New Password
+          <div className="space-y-1">
+            <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300">
+              {t('changePassword.newPassword')}
             </label>
             <div className="relative">
-              <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+              <Lock className="w-4 h-4 absolute left-3 rtl:left-auto rtl:right-3 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
                 type={showNewPassword ? 'text' : 'password'}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                placeholder="Minimum 8 characters"
+                placeholder={t('changePassword.newPlaceholder')}
                 required
-                className="w-full pl-10 pr-11 py-2.5 rounded-xl bg-white/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700/80 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm text-slate-900 dark:text-white placeholder-slate-400 transition-all shadow-sm"
+                className="w-full pl-9 rtl:pl-10 rtl:pr-9 pr-10 py-2 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-500 text-slate-900 dark:text-white"
               />
               <button
                 type="button"
                 onClick={() => setShowNewPassword(!showNewPassword)}
-                className="p-1.5 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+                className="p-1.5 absolute right-2.5 rtl:right-auto rtl:left-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
               >
                 {showNewPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
             </div>
           </div>
 
-          {/* Confirm New Password */}
-          <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider">
-              Confirm New Password
+          {/* Confirm Password */}
+          <div className="space-y-1">
+            <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300">
+              {t('changePassword.confirmPassword')}
             </label>
             <div className="relative">
-              <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+              <Lock className="w-4 h-4 absolute left-3 rtl:left-auto rtl:right-3 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
                 type={showConfirmPassword ? 'text' : 'password'}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Re-enter new password"
+                placeholder={t('changePassword.confirmPlaceholder')}
                 required
-                className="w-full pl-10 pr-11 py-2.5 rounded-xl bg-white/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700/80 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm text-slate-900 dark:text-white placeholder-slate-400 transition-all shadow-sm"
+                className="w-full pl-9 rtl:pl-10 rtl:pr-9 pr-10 py-2 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-500 text-slate-900 dark:text-white"
               />
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="p-1.5 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+                className="p-1.5 absolute right-2.5 rtl:right-auto rtl:left-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
               >
                 {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
             </div>
           </div>
 
-          {/* Security Requirements Checklist */}
-          <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/50 space-y-1.5 text-xs">
-            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-              Security Requirements
+          {/* Validation Checklist */}
+          <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200/60 dark:border-slate-700/60 space-y-1.5 text-xs">
+            <div className="text-[11px] font-bold uppercase text-slate-400">
+              {t('changePassword.reqTitle')}
             </div>
-            <div className="flex items-center gap-2">
-              <span className={`w-2 h-2 rounded-full ${isMinLength ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-600'}`} />
-              <span className={isMinLength ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-slate-500 dark:text-slate-400'}>
-                At least 8 characters long
-              </span>
+            <div className={`flex items-center gap-2 ${isMinLength ? 'text-emerald-500 font-medium' : 'text-slate-400'}`}>
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>{t('changePassword.reqLength')}</span>
             </div>
-            <div className="flex items-center gap-2">
-              <span className={`w-2 h-2 rounded-full ${isMatch ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-600'}`} />
-              <span className={isMatch ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-slate-500 dark:text-slate-400'}>
-                Passwords match
-              </span>
+            <div className={`flex items-center gap-2 ${isMatch ? 'text-emerald-500 font-medium' : 'text-slate-400'}`}>
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>{t('changePassword.reqMatch')}</span>
+            </div>
+            <div className={`flex items-center gap-2 ${isDifferentFromCurrent ? 'text-emerald-500 font-medium' : 'text-slate-400'}`}>
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>{t('changePassword.reqDifferent')}</span>
             </div>
           </div>
 
-          {/* Actions */}
-          <div className="pt-2 flex items-center justify-end gap-3">
+          {/* Actions Footer */}
+          <div className="pt-2 flex items-center justify-end gap-2">
             <button
               type="button"
               onClick={handleClose}
-              className="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
             >
-              Cancel
+              {t('common.cancel')}
             </button>
+
             <button
               type="submit"
-              disabled={isSubmitting || !canSubmit}
-              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white font-semibold text-xs shadow-md shadow-sky-500/25 transition-all hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 cursor-pointer flex items-center gap-2"
+              disabled={!canSubmit || isSubmitting}
+              className="px-5 py-2 rounded-xl text-xs font-bold bg-sky-500 hover:bg-sky-600 text-white shadow-md shadow-sky-500/20 disabled:opacity-40 transition-all cursor-pointer"
             >
-              {isSubmitting ? (
-                <>
-                  <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  <span>Updating...</span>
-                </>
-              ) : (
-                <>
-                  <ShieldCheck className="w-4 h-4" />
-                  <span>Update Password</span>
-                </>
-              )}
+              {isSubmitting ? t('changePassword.updating') : t('changePassword.submitButton')}
             </button>
           </div>
         </form>

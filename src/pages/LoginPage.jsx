@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
-  Sparkles,
   Lock,
   User,
   Eye,
@@ -11,10 +11,12 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { ThemeSwitch } from '../components/ui/ThemeSwitch';
+import { LanguageSwitch } from '../components/ui/LanguageSwitch';
 import { GlassCard } from '../components/ui/GlassCard';
 import roshaLogo from '../assets/Logo/RoshaLink_logo.webp';
 
 export const LoginPage = () => {
+  const { t } = useTranslation();
   const { login, isLoading } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -24,7 +26,7 @@ export const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!username.trim() || !password) {
-      setErrorMessage('Please enter both username and password.');
+      setErrorMessage(t('auth.errRequired'));
       return;
     }
 
@@ -33,9 +35,9 @@ export const LoginPage = () => {
     if (!res.success) {
       const err = res.error || '';
       if (err.includes('Too many login attempts') || err.includes('429')) {
-        setErrorMessage('Too many failed login attempts. Access is temporarily locked for 15 minutes.');
+        setErrorMessage(t('auth.errRateLimit'));
       } else {
-        setErrorMessage(err || 'Authentication failed. Please check your credentials.');
+        setErrorMessage(t('auth.errInvalid'));
       }
     }
   };
@@ -46,8 +48,9 @@ export const LoginPage = () => {
       <div className="ambient-glow-cyan" />
       <div className="ambient-glow-purple" />
 
-      {/* Top Right Theme Toggle */}
-      <div className="fixed top-6 right-6 z-20">
+      {/* Top Controls: Language Switcher & Theme Switcher */}
+      <div className="fixed top-5 right-5 rtl:right-auto rtl:left-5 z-20 flex items-center gap-2">
+        <LanguageSwitch />
         <ThemeSwitch />
       </div>
 
@@ -68,7 +71,7 @@ export const LoginPage = () => {
               Rosha<span className="text-sky-500">Link</span> Admin
             </h1>
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              Sign in to manage inquiries, leads, and platform diagnostics.
+              {t('auth.subtitle')}
             </p>
           </div>
 
@@ -85,18 +88,18 @@ export const LoginPage = () => {
             {/* Username Input */}
             <div className="space-y-1.5">
               <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider">
-                Username
+                {t('auth.username')}
               </label>
               <div className="relative">
-                <User className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                <User className="w-4 h-4 absolute left-3.5 rtl:left-auto rtl:right-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Enter your username"
+                  placeholder={t('auth.usernamePlaceholder')}
                   autoComplete="username"
                   required
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700/80 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm text-slate-900 dark:text-white placeholder-slate-400 transition-all shadow-sm"
+                  className="w-full pl-10 rtl:pl-4 rtl:pr-10 pr-4 py-2.5 rounded-xl bg-white/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700/80 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm text-slate-900 dark:text-white placeholder-slate-400 transition-all shadow-sm"
                 />
               </div>
             </div>
@@ -104,23 +107,23 @@ export const LoginPage = () => {
             {/* Password Input */}
             <div className="space-y-1.5">
               <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider">
-                Password
+                {t('auth.password')}
               </label>
               <div className="relative">
-                <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                <Lock className="w-4 h-4 absolute left-3.5 rtl:left-auto rtl:right-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
+                  placeholder={t('auth.passwordPlaceholder')}
                   autoComplete="current-password"
                   required
-                  className="w-full pl-10 pr-11 py-2.5 rounded-xl bg-white/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700/80 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm text-slate-900 dark:text-white placeholder-slate-400 transition-all shadow-sm"
+                  className="w-full pl-10 rtl:pl-11 rtl:pr-10 pr-11 py-2.5 rounded-xl bg-white/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700/80 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm text-slate-900 dark:text-white placeholder-slate-400 transition-all shadow-sm"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="p-1.5 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+                  className="p-1.5 absolute right-3 rtl:right-auto rtl:left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors cursor-pointer"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -136,12 +139,12 @@ export const LoginPage = () => {
               {isLoading ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  <span>Verifying Credentials...</span>
+                  <span>{t('auth.verifying')}</span>
                 </>
               ) : (
                 <>
-                  <span>Sign In to Admin Portal</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>{t('auth.signInButton')}</span>
+                  <ArrowRight className="w-4 h-4 rtl:rotate-180" />
                 </>
               )}
             </button>
@@ -149,12 +152,12 @@ export const LoginPage = () => {
 
           {/* Security & Access Notice */}
           <div className="pt-4 border-t border-slate-100 dark:border-slate-800/80 space-y-2">
-            <div className="flex items-center justify-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-medium">
+            <div className="flex items-center justify-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-medium text-center">
               <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
-              <span>Restricted Access &bull; Authorized Personnel Only</span>
+              <span>{t('auth.securityBadge')}</span>
             </div>
             <p className="text-[11px] text-center text-slate-400 dark:text-slate-500 leading-relaxed">
-              All login attempts and IP activities are audited. Multiple failed attempts trigger automated IP lockout.
+              {t('auth.securityNotice')}
             </p>
           </div>
         </GlassCard>

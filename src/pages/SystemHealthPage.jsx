@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Activity, Database, Server, Clock, RefreshCw, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { api } from '../config/api';
 import { GlassCard } from '../components/ui/GlassCard';
 
 export const SystemHealthPage = () => {
+  const { t } = useTranslation();
   const [health, setHealth] = useState(null);
   const [loading, setLoading] = useState(false);
   const [latency, setLatency] = useState(null);
@@ -42,117 +44,117 @@ export const SystemHealthPage = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-headline font-bold text-slate-900 dark:text-white">
-            System & Database Health
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-headline font-bold text-slate-900 dark:text-white">
+            {t('health.pageTitle')}
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Real-time diagnostics for Node.js API server and MongoDB connection.
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+            {t('health.pageSubtitle')}
           </p>
         </div>
 
         <button
           onClick={checkHealth}
           disabled={loading}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white text-xs font-bold transition-all shadow-md shadow-sky-500/20 disabled:opacity-50"
+          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white text-xs font-bold transition-all shadow-md shadow-sky-500/20 disabled:opacity-50 cursor-pointer w-full sm:w-auto"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
-          <span>Ping API Server</span>
+          <span>{loading ? t('health.checking') : t('health.pingButton')}</span>
         </button>
       </div>
 
       {error ? (
-        <div className="p-6 rounded-2xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-200 text-sm">
-          <div className="font-bold mb-1">Backend Connection Error</div>
-          <p>{error}</p>
-          <p className="text-xs mt-2 text-rose-500">
-            Make sure the backend server is running on port 5000 (`npm run dev` in `OurOwnWebstieBackend`).
+        <div className="p-6 rounded-2xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-200 text-sm space-y-1">
+          <div className="font-bold">{t('health.errorTitle')}</div>
+          <p className="text-xs font-mono">{error}</p>
+          <p className="text-xs pt-2 text-rose-600 dark:text-rose-400">
+            {t('health.errorHint')}
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {/* Server Status */}
-          <GlassCard className="space-y-2">
+          <GlassCard className="space-y-2 p-5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-400 uppercase">API Server</span>
+              <span className="text-xs font-semibold text-slate-400 uppercase">{t('health.apiServer')}</span>
               <Server className="w-4 h-4 text-sky-500" />
             </div>
-            <div className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <div className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-              {health?.status === 'ok' ? 'Operational' : 'Checking...'}
+              {health?.status === 'ok' ? t('health.operational') : t('health.checking')}
             </div>
             <p className="text-xs text-slate-500">Express.js on Port 5000</p>
           </GlassCard>
 
           {/* Database Status */}
-          <GlassCard className="space-y-2">
+          <GlassCard className="space-y-2 p-5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-400 uppercase">MongoDB Database</span>
+              <span className="text-xs font-semibold text-slate-400 uppercase">{t('health.mongoDb')}</span>
               <Database className="w-4 h-4 text-emerald-500" />
             </div>
-            <div className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <div className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <span
                 className={`w-2.5 h-2.5 rounded-full ${
                   health?.database === 'connected' ? 'bg-emerald-500' : 'bg-amber-500'
                 }`}
               />
-              {health?.database === 'connected' ? 'Connected' : 'Connecting...'}
+              {health?.database === 'connected' ? t('health.connected') : t('health.connecting')}
             </div>
             <p className="text-xs text-slate-500">Mongoose ODM Active</p>
           </GlassCard>
 
           {/* API Latency */}
-          <GlassCard className="space-y-2">
+          <GlassCard className="space-y-2 p-5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-400 uppercase">Response Latency</span>
+              <span className="text-xs font-semibold text-slate-400 uppercase">{t('health.latency')}</span>
               <Activity className="w-4 h-4 text-indigo-500" />
             </div>
-            <div className="text-2xl font-bold text-slate-900 dark:text-white font-mono">
+            <div className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white font-mono">
               {latency !== null ? `${latency} ms` : '—'}
             </div>
-            <p className="text-xs text-slate-500">Round-trip ping</p>
+            <p className="text-xs text-slate-500">{t('health.fast')}</p>
           </GlassCard>
 
           {/* Server Uptime */}
-          <GlassCard className="space-y-2">
+          <GlassCard className="space-y-2 p-5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-400 uppercase">Server Uptime</span>
+              <span className="text-xs font-semibold text-slate-400 uppercase">{t('health.uptime')}</span>
               <Clock className="w-4 h-4 text-teal-500" />
             </div>
-            <div className="text-2xl font-bold text-slate-900 dark:text-white font-mono">
+            <div className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white font-mono">
               {formatUptime(health?.uptime)}
             </div>
-            <p className="text-xs text-slate-500">Environment: {health?.environment || 'development'}</p>
+            <p className="text-xs text-slate-500">{health?.environment || 'production'}</p>
           </GlassCard>
         </div>
       )}
 
       {/* Architecture Specs */}
-      <GlassCard className="space-y-4">
-        <h3 className="font-headline font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
+      <GlassCard className="space-y-4 p-5 sm:p-6">
+        <h3 className="font-headline font-bold text-sm sm:text-base text-slate-900 dark:text-white flex items-center gap-2">
           <ShieldCheck className="w-5 h-5 text-sky-500" />
-          Backend Architecture & Security Specifications
+          <span>{t('health.systemInfo')}</span>
         </h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 text-xs">
           <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200/60 dark:border-slate-700/60 space-y-1">
             <div className="font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Rate Limiting
             </div>
-            <div className="text-slate-500">10 requests / 15 min per IP on lead capture</div>
+            <div className="text-slate-500">10 requests / 15 min per IP</div>
           </div>
 
           <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200/60 dark:border-slate-700/60 space-y-1">
             <div className="font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> CORS Security
             </div>
-            <div className="text-slate-500">Strict origin whitelist for web & admin</div>
+            <div className="text-slate-500">Strict origin whitelist enforced</div>
           </div>
 
           <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200/60 dark:border-slate-700/60 space-y-1">
             <div className="font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Data Sanitization
             </div>
-            <div className="text-slate-500">Control character stripping & regex validation</div>
+            <div className="text-slate-500">Regex & schema validation</div>
           </div>
         </div>
       </GlassCard>

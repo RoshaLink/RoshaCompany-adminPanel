@@ -1,11 +1,22 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Clock, ArrowRight, Mail } from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
 import { GlassCard } from '../ui/GlassCard';
 import { LeadStatusBadge } from '../Leads/LeadStatusBadge';
-import { SOURCES_MAP } from '../Leads/LeadFilters';
+
+export const getLocalizedSource = (sourceKey, t) => {
+  const map = {
+    'connect-with-us': t('leads.sourceConnect'),
+    contact: t('leads.sourceContact'),
+    'get-started': t('leads.sourceGetStarted'),
+    chat: t('leads.sourceChat'),
+  };
+  return map[sourceKey] || sourceKey;
+};
 
 export const RecentLeadsCard = () => {
+  const { t } = useTranslation();
   const { stats, setSelectedLead, setActiveTab } = useAdmin();
   const recentLeads = stats?.recentLeads || [];
 
@@ -15,21 +26,21 @@ export const RecentLeadsCard = () => {
         <div className="flex items-center gap-2">
           <Clock className="w-4 h-4 text-sky-500" />
           <h3 className="font-headline font-bold text-sm text-slate-900 dark:text-white">
-            Recent Submissions
+            {t('dashboard.recentTitle')}
           </h3>
         </div>
         <button
           onClick={() => setActiveTab('leads')}
-          className="text-xs font-semibold text-sky-500 hover:text-sky-600 flex items-center gap-1 hover:underline"
+          className="text-xs font-semibold text-sky-500 hover:text-sky-600 flex items-center gap-1 hover:underline cursor-pointer"
         >
-          <span>View All</span>
-          <ArrowRight className="w-3.5 h-3.5" />
+          <span>{t('common.viewAll')}</span>
+          <ArrowRight className="w-3.5 h-3.5 rtl:rotate-180" />
         </button>
       </div>
 
       {recentLeads.length === 0 ? (
         <div className="py-8 text-center text-xs text-slate-400">
-          No inquiries submitted yet.
+          {t('dashboard.noRecent')}
         </div>
       ) : (
         <div className="divide-y divide-slate-100 dark:divide-slate-800/60">
@@ -51,7 +62,7 @@ export const RecentLeadsCard = () => {
 
               <div className="flex items-center gap-2 shrink-0">
                 <span className="text-[10px] text-slate-400 hidden sm:inline">
-                  {SOURCES_MAP[lead.source] || lead.source}
+                  {getLocalizedSource(lead.source, t)}
                 </span>
                 <LeadStatusBadge leadId={lead._id || lead.id} status={lead.status} editable={false} />
               </div>
