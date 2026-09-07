@@ -150,6 +150,32 @@ export const LoginPage = () => {
             </button>
           </form>
 
+          {/* Dev Quick Login Helper (Only active in local development) */}
+          {import.meta.env.DEV && (
+            <div className="p-3 rounded-xl bg-sky-50/70 dark:bg-sky-950/40 border border-sky-200/80 dark:border-sky-800/60 text-xs space-y-2 animate-fadeIn">
+              <div className="flex items-center justify-between font-semibold text-sky-800 dark:text-sky-300">
+                <span>🛠 Dev Quick Fill:</span>
+                <span className="text-[11px] font-mono opacity-80">pass: letsdoit</span>
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {['morteza', 'bella', 'milad', 'sohrab', 'mina'].map((adminUser) => (
+                  <button
+                    key={adminUser}
+                    type="button"
+                    onClick={() => {
+                      setUsername(adminUser);
+                      setPassword('letsdoit');
+                      setErrorMessage('');
+                    }}
+                    className="px-2 py-1 rounded-md bg-white dark:bg-slate-800 text-sky-600 dark:text-sky-300 font-medium hover:bg-sky-500 hover:text-white transition-all border border-sky-100 dark:border-slate-700 shadow-xs cursor-pointer text-[11px]"
+                  >
+                    {adminUser}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Security & Access Notice */}
           <div className="pt-4 border-t border-slate-100 dark:border-slate-800/80 space-y-2">
             <div className="flex items-center justify-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-medium text-center">
