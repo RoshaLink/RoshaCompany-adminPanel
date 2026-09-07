@@ -92,30 +92,30 @@ export const StatsOverview = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4 mb-6 sm:mb-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4 mb-5 sm:mb-8">
       {cards.map((card, idx) => {
         const Icon = card.icon;
         return (
           <GlassCard
             key={idx}
             onClick={card.action}
-            className="group relative cursor-pointer hover:border-sky-400 transition-all p-4 sm:p-5"
+            className="group relative cursor-pointer hover:border-sky-400 transition-all p-3.5 sm:p-5"
           >
             {/* Top Row: Title and Icon */}
-            <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4">
-              <span className="text-[11px] sm:text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider truncate">
+            <div className="flex items-center justify-between gap-2 mb-2.5 sm:mb-4">
+              <span className="text-[10px] sm:text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider truncate">
                 {card.title}
               </span>
               <div
-                className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr ${card.gradient} flex items-center justify-center text-white shadow-md shadow-sky-500/20 group-hover:scale-110 transition-transform shrink-0`}
+                className={`w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr ${card.gradient} flex items-center justify-center text-white shadow-md shadow-sky-500/20 group-hover:scale-110 transition-transform shrink-0`}
               >
-                <Icon className="w-4 h-4" />
+                <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </div>
             </div>
 
             {/* Value */}
-            <div className="flex items-baseline gap-2 mb-1">
-              <span className="text-2xl sm:text-3xl font-headline font-bold text-slate-900 dark:text-white">
+            <div className="flex items-baseline gap-1.5 sm:gap-2 mb-1">
+              <span className="text-xl sm:text-2xl lg:text-3xl font-headline font-bold text-slate-900 dark:text-white">
                 {card.value}
               </span>
               {card.highlight && (

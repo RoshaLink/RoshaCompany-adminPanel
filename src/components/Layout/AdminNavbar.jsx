@@ -64,24 +64,24 @@ export const AdminNavbar = () => {
     <header className="sticky top-0 z-30 border-b border-slate-200 dark:border-slate-800/80 bg-white/80 dark:bg-[#0b1120]/80 backdrop-blur-xl px-3 sm:px-6 lg:px-8 py-3 flex flex-col gap-2">
       <div className="flex items-center justify-between gap-2 sm:gap-4">
         {/* Mobile Menu Button & Brand */}
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 transition-colors"
+            className="p-1.5 sm:p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
             aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
           <div className="flex items-center gap-1.5 cursor-pointer" onClick={() => setActiveTab('dashboard')}>
-            <img src={roshaLogo} alt="RoshaLink Logo" className="w-7 h-7 object-contain" />
-            <span className="font-headline font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+            <img src={roshaLogo} alt="RoshaLink Logo" className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
+            <span className="font-headline font-bold text-xs xs:text-sm sm:text-base text-slate-900 dark:text-white truncate">
               Rosha<span className="text-sky-500">Admin</span>
             </span>
           </div>
         </div>
 
         {/* Global Inquiries Quick Search Bar (Desktop / Tablet) */}
-        <div className="flex-1 max-w-md hidden sm:block">
+        <div className="flex-1 max-w-xs md:max-w-sm lg:max-w-md hidden sm:block">
           <div className="relative">
             <Search className="w-4 h-4 absolute left-3.5 rtl:left-auto rtl:right-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
@@ -89,7 +89,7 @@ export const AdminNavbar = () => {
               value={filters.search}
               onChange={handleSearchChange}
               placeholder={t('leads.globalSearchPlaceholder')}
-              className="w-full pl-10 rtl:pl-4 rtl:pr-10 pr-4 py-2 text-sm rounded-xl bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/60 focus:outline-none focus:ring-2 focus:ring-sky-500 text-slate-900 dark:text-slate-100 placeholder-slate-400 transition-all shadow-inner"
+              className="w-full pl-10 rtl:pl-4 rtl:pr-10 pr-4 py-2 text-xs sm:text-sm rounded-xl bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/60 focus:outline-none focus:ring-2 focus:ring-sky-500 text-slate-900 dark:text-slate-100 placeholder-slate-400 transition-all shadow-inner"
             />
             {filters.search && (
               <button
@@ -103,11 +103,11 @@ export const AdminNavbar = () => {
         </div>
 
         {/* Right Controls Area */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5">
+        <div className="flex items-center gap-1 sm:gap-2">
           {/* Mobile Search Toggle */}
           <button
             onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
-            className="sm:hidden p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-500"
+            className="sm:hidden p-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-500"
             title={t('common.search')}
           >
             <Search className="w-4 h-4" />
@@ -124,10 +124,10 @@ export const AdminNavbar = () => {
           <button
             onClick={refreshAll}
             disabled={isLoading || isStatsLoading}
-            className="p-2 sm:p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700/60 text-slate-700 dark:text-slate-300 hover:text-sky-500 transition-all hover:scale-105 cursor-pointer disabled:opacity-50"
+            className="p-1.5 sm:p-2 rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700/60 text-slate-700 dark:text-slate-300 hover:text-sky-500 transition-all hover:scale-105 cursor-pointer disabled:opacity-50"
             title={t('common.refresh')}
           >
-            <RotateCw className={`w-4 h-4 ${isLoading || isStatsLoading ? 'animate-spin text-sky-500' : ''}`} />
+            <RotateCw className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isLoading || isStatsLoading ? 'animate-spin text-sky-500' : ''}`} />
           </button>
 
           {/* Multi-language Switcher */}
@@ -137,8 +137,8 @@ export const AdminNavbar = () => {
           <ThemeSwitch />
 
           {/* User Profile & Actions */}
-          <div className="flex items-center gap-1.5 sm:gap-2 pl-2 rtl:pl-0 rtl:pr-2 border-l rtl:border-l-0 rtl:border-r border-slate-200 dark:border-slate-800">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white text-xs font-bold shadow-md shadow-sky-500/20 shrink-0">
+          <div className="flex items-center gap-1 sm:gap-2 pl-1.5 sm:pl-2 rtl:pl-0 rtl:pr-1.5 sm:rtl:pr-2 border-l rtl:border-l-0 rtl:border-r border-slate-200 dark:border-slate-800">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white text-[11px] sm:text-xs font-bold shadow-md shadow-sky-500/20 shrink-0">
               {userInitials}
             </div>
             <div className="hidden md:block text-left rtl:text-right">
@@ -152,7 +152,7 @@ export const AdminNavbar = () => {
 
             <button
               onClick={() => setIsPasswordModalOpen(true)}
-              className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-sky-500 hover:bg-sky-50 dark:hover:bg-sky-950/40 transition-colors"
+              className="hidden sm:flex p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-sky-500 hover:bg-sky-50 dark:hover:bg-sky-950/40 transition-colors"
               title={t('nav.changePassword')}
             >
               <KeyRound className="w-4 h-4" />
@@ -160,7 +160,7 @@ export const AdminNavbar = () => {
 
             <button
               onClick={logout}
-              className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
+              className="hidden sm:flex p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
               title={t('nav.logout')}
             >
               <LogOut className="w-4 h-4" />
@@ -194,9 +194,9 @@ export const AdminNavbar = () => {
         </div>
       )}
 
-      {/* Mobile Navigation Drawer */}
+      {/* Mobile & Tablet Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="fixed inset-x-0 top-[57px] bottom-0 bg-slate-950/60 backdrop-blur-sm z-40 md:hidden" onClick={() => setMobileMenuOpen(false)}>
+        <div className="fixed inset-x-0 top-[57px] bottom-0 bg-slate-950/60 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)}>
           <div
             className="w-full max-w-xs bg-white dark:bg-slate-900 border-r rtl:border-r-0 rtl:border-l border-slate-200 dark:border-slate-800 p-5 space-y-3 h-full overflow-y-auto shadow-2xl animate-fadeIn"
             onClick={(e) => e.stopPropagation()}

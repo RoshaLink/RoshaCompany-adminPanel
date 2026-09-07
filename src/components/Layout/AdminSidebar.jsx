@@ -63,7 +63,7 @@ export const AdminSidebar = () => {
   ];
 
   return (
-    <aside className="w-64 shrink-0 hidden md:flex flex-col border-r rtl:border-r-0 rtl:border-l border-slate-200 dark:border-slate-800/80 bg-white/70 dark:bg-[#0f172a]/70 backdrop-blur-2xl p-5 min-h-screen sticky top-0 z-20">
+    <aside className="w-64 shrink-0 hidden lg:flex flex-col border-r rtl:border-r-0 rtl:border-l border-slate-200 dark:border-slate-800/80 bg-white/70 dark:bg-[#0f172a]/70 backdrop-blur-2xl p-5 min-h-screen sticky top-0 z-20">
       {/* Brand Logo & Tag */}
       <div className="flex items-center gap-3 px-2 py-4 mb-6 border-b border-slate-100 dark:border-slate-800/60">
         <img

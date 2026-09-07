@@ -94,24 +94,24 @@ export const ChangePasswordModal = ({ isOpen, onClose }) => {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-slate-950/60 backdrop-blur-sm animate-fadeIn"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-2.5 sm:p-4 bg-slate-950/60 backdrop-blur-sm animate-fadeIn"
       onClick={handleClose}
     >
       <div
-        className="w-full max-w-md rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[92vh] animate-scaleUp my-auto"
+        className="w-full max-w-md rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[96vh] sm:max-h-[92vh] animate-scaleUp my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="p-4 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex items-start justify-between gap-3 bg-gradient-to-b from-slate-50/50 dark:from-slate-800/20 to-transparent">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-sky-50 dark:bg-sky-950 text-sky-500 border border-sky-200 dark:border-sky-800 flex items-center justify-center shrink-0">
-              <KeyRound className="w-5 h-5" />
+        <div className="p-3.5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex items-start justify-between gap-2.5 sm:gap-3 bg-gradient-to-b from-slate-50/50 dark:from-slate-800/20 to-transparent">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-sky-50 dark:bg-sky-950 text-sky-500 border border-sky-200 dark:border-sky-800 flex items-center justify-center shrink-0">
+              <KeyRound className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div>
-              <h3 className="text-base sm:text-lg font-headline font-bold text-slate-900 dark:text-white">
+              <h3 className="text-sm sm:text-lg font-headline font-bold text-slate-900 dark:text-white">
                 {t('changePassword.modalTitle')}
               </h3>
-              <p className="text-[11px] sm:text-xs text-slate-500">
+              <p className="text-[10px] sm:text-xs text-slate-500">
                 {t('changePassword.modalSubtitle')}
               </p>
             </div>
@@ -121,12 +121,12 @@ export const ChangePasswordModal = ({ isOpen, onClose }) => {
             onClick={handleClose}
             className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
 
         {/* Content Body */}
-        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1 text-sm">
+        <form onSubmit={handleSubmit} className="p-3.5 sm:p-6 space-y-3 sm:space-y-4 overflow-y-auto flex-1 text-sm">
           {/* Status Banners */}
           {errorMessage && (
             <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/70 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2">

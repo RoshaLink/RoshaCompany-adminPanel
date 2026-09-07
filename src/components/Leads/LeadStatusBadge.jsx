@@ -79,7 +79,7 @@ export const LeadStatusBadge = ({ leadId, status = 'new', editable = true }) => 
             }}
           />
           <div
-            className="absolute left-0 rtl:left-auto rtl:right-0 mt-1.5 w-40 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xl p-1.5 z-50 animate-fadeIn"
+            className="absolute right-0 rtl:right-auto rtl:left-0 mt-1.5 w-40 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xl p-1.5 z-50 animate-fadeIn"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="text-[10px] font-bold px-2 py-1 uppercase text-slate-400 dark:text-slate-500">

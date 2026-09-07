@@ -13,7 +13,7 @@ export const DashboardPage = () => {
   return (
     <div className="space-y-6">
       {/* Welcome Banner */}
-      <div className="glass-card rounded-3xl p-5 sm:p-7 lg:p-8 bg-gradient-to-r from-sky-500/10 via-indigo-500/10 to-transparent border border-sky-200/50 dark:border-sky-800/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-7 lg:p-8 bg-gradient-to-r from-sky-500/10 via-indigo-500/10 to-transparent border border-sky-200/50 dark:border-sky-800/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="space-y-1.5">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
             <Sparkles className="w-3.5 h-3.5 text-sky-500" />

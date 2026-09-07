@@ -43,20 +43,20 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 relative overflow-hidden bg-[#f8fafc] dark:bg-[#0b1120] text-[#0f172a] dark:text-[#f1f5f9] selection:bg-sky-500 selection:text-white">
+    <div className="min-h-screen flex items-center justify-center p-3 sm:p-6 relative overflow-hidden bg-[#f8fafc] dark:bg-[#0b1120] text-[#0f172a] dark:text-[#f1f5f9] selection:bg-sky-500 selection:text-white">
       {/* Background Ambient Glows */}
       <div className="ambient-glow-cyan" />
       <div className="ambient-glow-purple" />
 
       {/* Top Controls: Language Switcher & Theme Switcher */}
-      <div className="fixed top-5 right-5 rtl:right-auto rtl:left-5 z-20 flex items-center gap-2">
+      <div className="fixed top-3 sm:top-5 right-3 sm:right-5 rtl:right-auto rtl:left-3 sm:rtl:left-5 z-20 flex items-center gap-1.5 sm:gap-2">
         <LanguageSwitch />
         <ThemeSwitch />
       </div>
 
       {/* Login Card */}
       <div className="w-full max-w-md relative z-10 animate-scaleUp">
-        <GlassCard className="p-6 sm:p-8 space-y-6 shadow-2xl border-slate-200/80 dark:border-slate-800/80 backdrop-blur-2xl">
+        <GlassCard className="p-4 sm:p-8 space-y-4 sm:space-y-6 shadow-2xl border-slate-200/80 dark:border-slate-800/80 backdrop-blur-2xl">
           {/* Header */}
           <div className="text-center space-y-2">
             <div className="flex justify-center mb-1">

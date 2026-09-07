@@ -135,15 +135,15 @@ ${selectedLead.message || '(No message)'}`;
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-slate-950/60 backdrop-blur-sm animate-fadeIn"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-2 sm:p-4 bg-slate-950/60 backdrop-blur-sm animate-fadeIn"
       onClick={() => setSelectedLead(null)}
     >
       <div
-        className="w-full max-w-2xl rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[92vh] animate-scaleUp my-auto"
+        className="w-full max-w-2xl rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[96vh] sm:max-h-[92vh] animate-scaleUp my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="p-4 sm:p-6 border-b border-slate-100 dark:border-slate-800/80 flex items-start justify-between gap-3 bg-gradient-to-b from-slate-50/50 dark:from-slate-800/20 to-transparent">
+        <div className="p-3.5 sm:p-6 border-b border-slate-100 dark:border-slate-800/80 flex items-start justify-between gap-2.5 sm:gap-3 bg-gradient-to-b from-slate-50/50 dark:from-slate-800/20 to-transparent">
           <div className="space-y-1 flex-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               {isEditing ? (
@@ -358,16 +358,16 @@ ${selectedLead.message || '(No message)'}`;
         </div>
 
         {/* Footer Actions */}
-        <div className="p-3.5 sm:p-5 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 flex flex-wrap items-center justify-between gap-2.5">
+        <div className="p-3 sm:p-5 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 flex flex-wrap items-center justify-between gap-2">
           <button
             onClick={handleDelete}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/60 transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/60 transition-colors cursor-pointer"
           >
-            <Trash2 className="w-4 h-4" />
+            <Trash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span>{t('common.delete')}</span>
           </button>
 
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center justify-end gap-1.5 sm:gap-2">
             {isEditing ? (
               <>
                 <button

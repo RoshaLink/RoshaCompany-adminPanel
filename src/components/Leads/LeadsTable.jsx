@@ -65,24 +65,26 @@ export const LeadsTable = () => {
           <div
             key={lead.id}
             onClick={() => setSelectedLead(lead)}
-            className="glass-card rounded-2xl p-4 space-y-3 hover:border-sky-400 transition-all cursor-pointer shadow-md"
+            className="glass-card rounded-2xl p-3.5 sm:p-4 space-y-2.5 sm:space-y-3 hover:border-sky-400 transition-all cursor-pointer shadow-md"
           >
             {/* Top row: Name & Status Badge */}
-            <div className="flex items-start justify-between gap-2">
+            <div className="flex flex-wrap items-start justify-between gap-2">
               <div className="min-w-0 flex-1">
                 <div className="font-bold text-sm text-slate-900 dark:text-white truncate">
                   {lead.name}
                 </div>
-                <div className="text-xs text-slate-500 flex items-center gap-1.5 mt-0.5 truncate">
+                <div className="text-xs text-slate-500 flex items-center gap-1.5 mt-0.5 min-w-0">
                   <Mail className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                  <span className="truncate">{lead.email}</span>
+                  <span className="truncate break-all">{lead.email}</span>
                 </div>
               </div>
-              <LeadStatusBadge leadId={lead.id} status={lead.status} />
+              <div className="shrink-0">
+                <LeadStatusBadge leadId={lead.id} status={lead.status} />
+              </div>
             </div>
 
             {/* Middle Row: Company, Service & Source */}
-            <div className="flex flex-wrap items-center gap-2 text-xs">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs">
               {lead.company && (
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
                   <Building className="w-3 h-3 text-slate-400" />
@@ -137,13 +139,13 @@ export const LeadsTable = () => {
           <table className="w-full text-left rtl:text-right text-sm">
             <thead className="bg-slate-50/80 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider font-semibold">
               <tr>
-                <th className="py-3.5 px-4 font-semibold">{t('leads.colClient')}</th>
-                <th className="py-3.5 px-4 font-semibold hidden md:table-cell">{t('leads.colCompany')}</th>
-                <th className="py-3.5 px-4 font-semibold hidden lg:table-cell">{t('leads.colService')}</th>
-                <th className="py-3.5 px-4 font-semibold">{t('leads.colSource')}</th>
-                <th className="py-3.5 px-4 font-semibold">{t('leads.colStatus')}</th>
-                <th className="py-3.5 px-4 font-semibold hidden sm:table-cell">{t('leads.colDate')}</th>
-                <th className="py-3.5 px-4 text-right rtl:text-left font-semibold">{t('leads.colActions')}</th>
+                <th className="py-3 sm:py-3.5 px-3 sm:px-4 font-semibold">{t('leads.colClient')}</th>
+                <th className="py-3 sm:py-3.5 px-3 sm:px-4 font-semibold hidden md:table-cell">{t('leads.colCompany')}</th>
+                <th className="py-3 sm:py-3.5 px-3 sm:px-4 font-semibold hidden lg:table-cell">{t('leads.colService')}</th>
+                <th className="py-3 sm:py-3.5 px-3 sm:px-4 font-semibold">{t('leads.colSource')}</th>
+                <th className="py-3 sm:py-3.5 px-3 sm:px-4 font-semibold">{t('leads.colStatus')}</th>
+                <th className="py-3 sm:py-3.5 px-3 sm:px-4 font-semibold hidden sm:table-cell">{t('leads.colDate')}</th>
+                <th className="py-3 sm:py-3.5 px-3 sm:px-4 text-right rtl:text-left font-semibold">{t('leads.colActions')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
