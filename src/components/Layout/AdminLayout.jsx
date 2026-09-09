@@ -3,6 +3,7 @@ import { AdminSidebar } from './AdminSidebar';
 import { AdminNavbar } from './AdminNavbar';
 import { Toast } from '../ui/Toast';
 import { ChangePasswordModal } from '../ui/ChangePasswordModal';
+import { LeadDetailModal } from '../Leads/LeadDetailModal';
 import { useAdmin } from '../../context/AdminContext';
 
 export const AdminLayout = ({ children }) => {
@@ -27,6 +28,9 @@ export const AdminLayout = ({ children }) => {
 
       {/* Feedback Toast */}
       <Toast />
+
+      {/* Lead Detail Inspection Modal */}
+      <LeadDetailModal />
 
       {/* Change Password Modal */}
       <ChangePasswordModal

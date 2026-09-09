@@ -47,7 +47,7 @@ export const RecentLeadsCard = () => {
           {recentLeads.map((lead) => (
             <div
               key={lead._id || lead.id}
-              onClick={() => setSelectedLead(lead)}
+              onClick={() => setSelectedLead({ ...lead, id: lead.id || lead._id })}
               className="py-3 flex items-center justify-between gap-3 hover:bg-slate-50/60 dark:hover:bg-slate-800/40 p-2 rounded-xl transition-colors cursor-pointer group"
             >
               <div className="min-w-0">

@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { LeadFilters } from '../components/Leads/LeadFilters';
 import { LeadsTable } from '../components/Leads/LeadsTable';
-import { LeadDetailModal } from '../components/Leads/LeadDetailModal';
 import { Database } from 'lucide-react';
 import { useAdmin } from '../context/AdminContext';
 
@@ -39,9 +38,6 @@ export const LeadsManagementPage = () => {
 
       {/* Inquiries Data Table & Mobile Cards */}
       <LeadsTable />
-
-      {/* Lead Detail Inspection Modal */}
-      <LeadDetailModal />
     </div>
   );
 };
